@@ -8,10 +8,7 @@ def async_generator(callback):
     thread = Thread(target=lambda: return_value.append(callback()))
     thread.start()
 
-    return (
-        thread.join() or return_value[0]
-        for _ in [None]
-    )
+    yield thread.join() or return_value[0]
 
 def async_lines(path):
     def read_lines():
